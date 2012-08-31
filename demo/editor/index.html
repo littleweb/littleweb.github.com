@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>小web编辑器简易版</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/demo/editor/adore-editor.js"></script>
+<style type="text/css">
+*{margin:0;padding:0;}
+.editArea{width:704px;height:534px;margin:30px auto;overflow:hidden;padding:8px 12px;position:relative;border:1px solid #DDD;background:#EEE;}
+p.bar{height:30px;}
+p.bar input{padding:2px 5px;}
+.editArea .richText{width:704px;height:500px;padding:0px;position:relative;overflow:hidden;border:none;background:#FFF;}
+</style>
+</head>
+<body>
+<form class="editArea">
+	<p class="bar">
+		<input type="button" value="大字" onclick="E.css('字号',20);" />
+		<input type="button" value="楷体" onclick="E.css('字体',楷体);" />
+		<input type="button" value="加粗" onclick="E.css('加粗');" />
+		<input type="button" value="斜体" onclick="E.css('斜体');" />
+		<input type="button" value="下划线" onclick="E.css('下划线');" />
+		<input type="button" value="居左" onclick="E.css('居左');" />
+		<input type="button" value="居中" onclick="E.css('居中');" />
+		<input type="button" value="居右" onclick="E.css('居右');" />
+		<input type="button" value="表情" onclick="E.image('http://images.fumuhui.com/site/face/iface/e144.gif','坏笑');" />
+		<input type="button" value="图片" onclick="E.image('http://www.google.com/images/logos/ps_logo2.png','images');" />
+		<input type="button" value="视频" onclick="E.flash({width:'400',height:'337',url:'http://player.youku.com/player.php/sid/XMjMyODY4OTgw/v.swf'});" />
+		<input type="button" value="flash" onclick="E.flash({width:'400',height:'337',url:'http://player.youku.com/player.php/sid/XMjMyODY4OTgw/v.swf'});" />
+		<input type="button" value="超链接" onclick="E.a('http:www.google.com','_blank');" />
+        <strong><a id="viewCode" href="javascript:E.viewCode();">HTML</a></strong>
+	</p>
+	<textarea name="" id="richText" class="richText"></textarea>
+</form>
+
+<script type="text/javascript">
+	var E=(new adoreEditor());
+	E.birth({
+		id:"richText",
+		css:'editor.css',//--编辑器文档样式
+		html:'<img src="http://www.google.com/images/logos/ps_logo2.png" alt="images">测试内容...'//--默认显示内容
+	});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>VeryMinds</title>
+<script type="text/javascript" src="action/jq.min.js"></script>
+<link rel="stylesheet" href="ui/style.css" />
+<style type="text/css">
+.widgets{cursor:move;}
+</style>
+</head>
+<body id="state">
+<canvas id="grid" width="2400" height="1600"></canvas>
+<section id="widgets" class="widgets">
+	<canvas id="lines" width="2400" height="1600"></canvas>
+	<canvas id="map" width="2400" height="1600"></canvas>
+	<article id="notes" class="notes">
+		<div id="action" class="action"><input id="delThis" type="button" value="×" /></div>
+		<div id="title" class="F1">小web</div>
+		<div id="list">
+			
+		</div>
+	</article>
+</section>
+<div id="showNote">
+	<p></p>
+	<input type="button" value="×" onclick="this.parentNode.style.display='none'" />
+</div>
+<script type="text/javascript" src="action/drawmap.js"></script>
+<script type="text/javascript" src="action/config.js"></script>
+<script type="text/javascript">
+	var data={
+		title:"小web的blog",
+		mapStyle:"wise",
+		note : "www.xiaoweb.com",
+		list:[
+			{"title" : "前端DEMO","tips" : "前端的一些demo"},
+			{"title" : "html5/css3","tips" : "新技术"},
+			{"title" : "Android开发","tips" : "移动开发相关资料"},
+			{"title" : "windowsGap","tips" : "类似于HTA解析程序"},
+			{"title" : "phoneGap","tips" : "流行移动开发框架"},
+			{"title" : "业内资讯","tips" : "关注前端动态"},
+			{"title" : "前端开发工具","tips" : "工欲善其行，必先利其器"}
+		]
+	};
+	//是否可编辑开关
+	var EditKey=false;
+	//画栅格线
+	Grid.draw("grid");
+	//初始化数据
+	drawMap[data.mapStyle](data);
+	//自动中心定位
+	AutoCenter(0);
+	//拖动
+	Drag("widgets","widgets");
+</script>
+</body>
+</html>

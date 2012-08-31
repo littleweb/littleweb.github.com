@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title></title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="stylesheet" href="" />
+<style>
+body{font-family:"微软雅黑";font-size:16px;}
+pre{width:550px;margin:10px;padding:15px;line-height:24px;overflow:hidden;font-family:"微软雅黑";font-size:16px;border:1px solid gray;background:#ccc;}
+#dir{width:550px;margin:10px;padding:15px;line-height:24px;border:1px solid gray;background:#ccc;}
+
+.node{margin-left:15px;color:green;}
+</style>
+</head>
+<body>
+<h2>文档书写格式</h2>
+<pre>
+/root :根目录
+	/app :应用目录
+		/baidu :百度
+		/google :谷歌
+		/qq :腾讯
+		/other :其他
+----
+	/data
+		/baidu
+		/google :谷歌
+----
+    /sys :系统
+</pre>
+<h2>用法解说</h2>
+<pre>
+- 目录表示：斜杠(/)+目录名，eg:/目录名;
+- 层级表示：占位符(    )+斜杠(/)+目录名，eg：	/目录名；
+- 目录描述：空格( )+冒号(:)+描述内容，eg: :描述内容；
+- 目录间隔：----;
+</pre>
+<h2>渲染后的显示样式</h2>
+<div id="dir">
+	/root :根目录
+		/app :应用目录
+			/baidu :百度
+			/google :谷歌
+			/qq :腾讯
+			/other :其他
+	----
+		/data
+			/baidu
+			/google :谷歌
+	----
+		/sys :系统
+</div>
+<script type="text/javascript">
+var dir=document.getElementById("dir");
+dir.innerHTML=dir.innerHTML.replace(/^\n/,'').replace(/\n|\s{1}:{1}|\t+\/|-{4}\n/g,function(a){
+	if(/\n|\s{1}:{1}|-{4}\n/.test(a)){
+		return ({'\n/':'|---','\n':'</span><br />',' :':'<span class="node">//','----\n':'<br />'})[a];
+	}else{
+		return (new Array(a.length-1)).join("|&nbsp;&nbsp;&nbsp;") + '|---';
+	}
+});
+</script>
+</body>
+</html>

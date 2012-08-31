@@ -1,0 +1,51 @@
+﻿html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,div,header,section,article,aside,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;}
+h1,h2, h3, h4, h5, h6 {font-size:100%;}
+ul,ol,li{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+img {border:0;}
+button,input,select,textarea{font-size:100%;}
+body{font-family:"微软雅黑";background:#F3F4F9;}
+/*公共版块*/
+.TBorder{border:1px solid gray;border-radius:5px;background:#fff;}
+.TBorder .title{height:35px;position:relative;line-height:35px;font-size:14px;font-weight:bold;color:#fff;background:gray;}
+.TBorder .title .tail{position:absolute;right:10px;}
+.widgets{width:2400px;height:1600px;position:relative;}
+.widgets{cursor:move;}
+canvas{position:absolute;left:0;top:0;}
+#grid{z-index:0;}
+#lines{z-index:1;}
+.menus{width:90px;margin-bottom:10px;text-align:center;}
+.menus dt{margin-bottom:10px;text-align:center;}
+.menus input{width:70px;margin-bottom:10px;padding:5px 0;cursor:pointer;}
+/*图标*/
+.note{width:32px;height:32px;display:inline-block;vertical-align:middle;cursor:default;text-indent:32px;overflow:hidden;background:url(icon/note.png) left top no-repeat;}
+/*main菜单*/
+.menu-main{width:100%;height:42px;position:fixed;z-index:100;left:1%;top:-5px;}
+.menu-main .inner{height:40px;margin:0 200px;border:1px solid gray;border-radius:5px;background:gray;}
+/*基本功能菜单*/
+.menu-baseStyle{position:fixed;z-index:100;left:10px;top:10px;}
+/*选项菜单*/
+.menu-mapStyle{position:fixed;z-index:100;right:10px;top:10px;}
+.nodes{color:#4C4C4C;}
+.action{width:80px;height:30px;padding:0 15px;display:none;position:absolute;z-index:100;line-height:30px;border:1px solid #808080;border-radius:5px;background:#D4DBEE;}
+.F1{height:58px;margin:-30px 0 0 -60px;padding:0 15px;position:absolute;left:50%;top:50%;z-index:100;line-height:60px;text-align:center;font-size:25px;font-family:"微软雅黑";font-weight: bold;border:1px solid #808080;border-radius:10px;background:#ACD6FF;}
+.F2{height:38px;padding:0 15px;position:absolute;z-index:100;line-height:40px;text-align:center;font-size:18px;border:1px solid #808080;border-radius:5px;background:#FFF;}
+.F2 .close{width:24px;height:24px;position:absolute;right:-10px;top:-10px;border:1px solid gray;border-radius:3px;}
+.F2 .tips{padding:0 5px;line-height:24px;font-size:14px;position:absolute;top:6px;border:1px solid #808080;background:#F2F2D6;}
+.F2 .tips.left{margin-right:20px;}
+.F2 .tips.left .path{position:absolute;right:-15px;top:-2px;font-size:25px;color:#808080;}
+.F2 .tips.right{margin-left:20px;}
+.F2 .tips.right .path{position:absolute;left:-15px;top:-2px;font-size:25px;color:#808080;}
+/*弹框显示文件*/
+.showFiles{width:550px;height:400px;margin:-200px 0 0 -275px;display:none;position:fixed;left:50%;top:50%;z-index:2000;}
+.showFiles .title{text-indent:1em;}
+.showFiles .body{padding:5px;}
+.showFiles .body li{width:80px;height:80px;margin:5px 0 5px 6px;float:left;cursor:default;text-align:center;border:1px solid #FFF;}
+.showFiles .body li:hover{border:1px solid gray;border-radius:5px;background:#E3E6E8;}
+.showFiles .body li p.icon{width:48px;height:48px;margin:5px auto;}
+.showFiles .body li p.name{font-size:14px;}
+/*显示记事*/
+#showNote{width:200px;padding:5px;display:none;position:absolute;z-index:11111;font-size:16px;border:2px solid #BC7E11;background:#FFAD1C;}
+#showNote input{padding:0px 3px;cursor:pointer;position:absolute;right:-18px;top:-18px;font-size:20px;border:2px solid #E6413A;border-radius:10px;background:#FFF;}

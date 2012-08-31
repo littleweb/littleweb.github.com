@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>联动选择列表组件</title>
+<style type="text/css">
+html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;}
+h1,h2, h3, h4, h5, h6 {font-size:100%;}
+ul,ol,li{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+img {border:0;}
+button,input,select,textarea{font-size:100%;}
+
+h1{width:750px;margin:auto;padding:15px 0 0 0;font-size:20px;}
+h2{padding-bottom:10px;font-size:16px;}
+.dataArea{width:700px;margin:10px auto 20px auto;padding:30px;border:1px solid gray;}
+.dataArea li{width:150px;height:200px;float:left;margin-right:10px;background:#F2F4FF;border:1px solid #9EC0D9;}
+.dataArea li p{padding:0 5px;height:24px;line-height:24px;}
+.dataArea li p.hover{background:#E8E8FF;}
+.dataArea li p.select{color:#fff;background:#316AC5;}
+.showValue{margin-bottom:25px;padding:15px 0 10px 0;clear:both;border-bottom:1px solid #ccc;}
+</style>
+<script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<h1>联动选选择列表组件</h1>
+<div class="dataArea">
+	<h2>普通分类列表</h2>
+	<ul id="cats"></ul>
+	<p class="showValue">选中数据：<input id="result" type="text" /></p>
+	<h2>初始化数据分类列表</h2>
+	<ul id="cats2"></ul>
+	<p class="showValue">选中数据：<input id="result2" type="text" /></p>
+</div>
+<script type="text/javascript">
+var Cats=function(container,data){
+	this.con=container;
+	this.data=data;
+	this.onselect=function(){};
+	this.init();
+}
+Cats.prototype={
+	_dom:function(con,tag){
+		return con.getElementsByTagName(tag);
+	},
+	//列表分类初始化设置
+	setData:function(data){
+		var _ps=this._dom(this.con,"p");
+		for(var i=0;i<data.length;i++){
+			for(var n=0;n<_ps.length;n++){
+				var me=_ps[n];
+				if(me.attributes["cid"].nodeValue==data[i]){
+					this._toggle(me,me.attributes["index"].nodeValue);
+					this._render(me.attributes["index"].nodeValue);
+					this._selData();
+					this._bind();
+				}
+			}
+		}
+	},
+	//按照地址链获取下级数据
+	_getData:function(pos){
+		var topThis=this;
+		function trans(){
+			var dataPath=pos.replace(/,/g,function(a,b,c){
+				return (b==0)?'[':'].list[';
+			});
+			return (eval('topThis.data' + dataPath + ']'));
+		}
+		return (pos=="")?false:trans();
+	},
+	//渲染数据
+	_render:function(pos){
+		var pos=pos?pos:'';
+		var _lis=this._dom(this.con,"li");
+		var _list=(this._getData(pos))?this._getData(pos).list:this.data;
+		if(_list){
+			var _lps="",_ptpl='<p cid="{1}" index="{2}">{3}</p>';
+			for(var i=0;i<_list.length;i++){
+				_lps+=_ptpl.replace(/\{(\d+)\}/g, function(a, b) {
+					return [_list[i].cid,(pos +','+i),_list[i].name][b - 1];
+				})
+			}
+			_lis[pos.split(",").length-1].innerHTML=_lps;
+			_lis[pos.split(",").length-1].style.display="block";
+		}
+	},
+	//选择数据
+	_selData:function(cid){
+		var _data=[];
+		var _ps=this._dom(this.con,"p");
+		for(var n=0;n<_ps.length;n++){
+			if(_ps[n].className.indexOf("select")>-1){
+				_data.push(_ps[n].attributes["cid"].nodeValue);
+			}
+		}
+		//将选中数据发送给对外数据接口
+		this.selData=_data;
+		this.itemData=cid;
+		//将选中事件发送给onselect
+		this.onselect();
+	},
+	//分类切换触发的显示联动
+	_toggle:function(me,pos){
+		var _lis=this._dom(this.con,"li");
+		var _ps=this._dom(me.parentNode,"p");
+		for(var i=0;i<_lis.length;i++){
+			if(i>(pos.split(",").length-1)){
+				//_lis[i].style.display="none";
+				_lis[i].innerHTML="";
+			}
+		}
+		if(_lis[pos.split(",").length-1]){_lis[pos.split(",").length-1].innerHTML="";}
+		for(var n=0;n<_ps.length;n++){
+			_ps[n].className="";
+		}
+		me.className="select";
+	},
+	//绑定点击切换事件
+	_bind:function(){
+		var _p=this._dom(this.con,"p");
+		for(var n=0;n<_p.length;n++){
+			(function(_n,topThis){
+				_n.onclick=function(){
+					topThis._toggle(this,this.attributes["index"].nodeValue);
+					topThis._render(this.attributes["index"].nodeValue);
+					topThis._selData(this.attributes["cid"].nodeValue);
+					topThis._bind();
+				}
+				_n.onmouseover=function(){
+					this.className+=' hover';
+				}
+				_n.onmouseout=function(){
+					this.className=this.className.replace(/\s{1}hover/g,"");
+				}
+			})(_p[n],this);
+		}
+	},
+	//初始化
+	init:function(){
+		this.con.innerHTML=(new Array(this.data.length+1)).join('<li></li>');
+		this._render();
+		this._bind();
+	}
+}
+var theCat=new Cats(document.getElementById("cats"),datas);
+theCat.onselect=function(){
+	document.getElementById("result").value=this.selData;
+}
+
+var theCat2=new Cats(document.getElementById("cats2"),datas);
+theCat2.onselect=function(){
+	console.log(this.itemData);
+	document.getElementById("result2").value=this.selData;
+}
+theCat2.setData([2,21,211]);
+</script>
+</body>
+</html>
