@@ -1,0 +1,65 @@
+
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>图片在线转base64</title>
+	<style type="text/css">
+	div#holder{ border:2px dashed #316AC5; width:300px; height:300px; float:left; text-align:center; line-height:300px; color:#585857; font-size:24px;}
+	#dataurl{ float:left; margin-left:20px; width:300px;}
+	#select{ display:block; margin-bottom:20px;};
+	</style>
+</head>
+<body>
+<input id="select" type=file>
+<div id="holder">浏览或拖拽图片生成base64</div>
+<textarea name="" id="dataurl" cols="30" rows="10"></textarea>
+<script>
+
+if (typeof window.FileReader === 'undefined') {
+	alert("请使用最新版firefox，chrome浏览器");
+} ;
+
+var holder = document.getElementById('holder'),
+	dataurl = document.getElementById('dataurl'),
+	upload = document.getElementById('select');
+	
+dataurl.value = "";	
+
+holder.ondragover = function () { this.className = 'hover'; return false; };
+
+holder.ondragend = function () { this.className = ''; return false;};
+
+holder.ondrop = function (e) {
+	this.className = '';
+	e.preventDefault();
+
+	var file = e.dataTransfer.files[0],
+	reader = new FileReader();
+	reader.onload = function (event) {
+		holder.innerHTML = "";
+		holder.style.background = 'url(' + event.target.result + ') no-repeat center';
+		dataurl.value = event.target.result;
+	};
+	reader.readAsDataURL(file);
+
+	return false;
+};
+
+upload.onchange = function (e) {
+	e.preventDefault();
+
+	var file = upload.files[0],
+	reader = new FileReader();
+	reader.onload = function (event) {
+        holder.innerHTML = "";
+		holder.style.background = 'url(' + event.target.result + ') no-repeat center';
+		dataurl.value = event.target.result;
+	};
+	reader.readAsDataURL(file);
+};
+  
+</script>
+
+</body>
+</html>
