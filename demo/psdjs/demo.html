@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>在线预览PSD</title>
+	<style type="text/css">
+	</style>
+  <script type="text/javascript" src="lib/psd.js"></script>
+</head>
+<body>
+请选择PSD文件：<input id="select" type=file>
+<script>
+
+if (typeof window.FileReader === 'undefined') {
+	alert("请使用最新版firefox，chrome浏览器");
+} ;
+
+var	upload = document.getElementById('select');
+	
+
+
+upload.onchange = function (e) {
+	e.preventDefault();
+
+	var file = upload.files[0];
+    PSD.fromFile(file, function (psd) {
+      var div = document.getElementById('test');
+      var imageData = psd.toImage();
+      var image = document.createElement('img');
+      image.src = imageData;
+      div.appendChild(image);
+    });
+};
+  
+</script>
+  <div id="test"></div>
+
+</body>
+</html>
